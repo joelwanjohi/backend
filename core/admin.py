@@ -40,8 +40,30 @@ class BlogPostAdmin(admin.ModelAdmin):
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'created_at')
-    search_fields = ('name', 'email')
+    list_display = ('name', 'email', 'short_message', 'created_at')
+    list_display_links = ('name', 'short_message')
+    search_fields = ('name', 'email', 'message')
+    
+    fieldsets = (
+        ('Contact Information', {
+            'fields': ('name', 'email')
+        }),
+        ('Message', {
+            'fields': ('message',),
+            'classes': ('wide',)
+        }),
+        ('System Information', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )
+    readonly_fields = ('created_at',)
+    
+    def short_message(self, obj):
+        # Return the first 50 characters of the message
+        return obj.message[:50] + '...' if len(obj.message) > 50 else obj.message
+    
+    short_message.short_description = 'Message'  # Column header in admin
 
 @admin.register(Resume)
 class ResumeAdmin(admin.ModelAdmin):
