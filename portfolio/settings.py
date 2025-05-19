@@ -5,10 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'your-secret-key'  # Replace with a secure value in production
 
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = False
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+ALLOWED_HOSTS = ['web-production-7d3c1.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-7d3c1.up.railway.app']
+
+
 
 # Application definition
 INSTALLED_APPS = [
