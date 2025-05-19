@@ -1,8 +1,20 @@
 # backend/core/views.py
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
+
+def create_admin_user(request):
+    if not User.objects.filter(username="joeli").exists():
+        User.objects.create_superuser(
+            username="joeli",
+            email="wabjohijoel207@gmail.com",
+            password="12345678"
+        )
+        return HttpResponse("✅ Superuser 'joeli' created successfully.")
+    else:
+        return HttpResponse("⚠️ Superuser 'joeli' already exists.")
 
 def home(request):
     return HttpResponse("Welcome to TechwithJoel's Portfolio API. Visit /api/ for endpoints or /admin/ for management.")
