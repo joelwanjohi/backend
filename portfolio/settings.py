@@ -119,3 +119,9 @@ CORS_ALLOWED_ORIGINS = [
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+
+# This is the key fix - force Django to use HTTPS for media URLs
+USE_TLS = True
