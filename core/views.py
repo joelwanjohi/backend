@@ -1,7 +1,10 @@
 # backend/core/views.py
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
+from django.conf import settings
 from rest_framework import viewsets
+import os
+import mimetypes
 from .models import *
 from .serializers import *
 
@@ -18,6 +21,21 @@ def create_admin_user(request):
 
 def home(request):
     return HttpResponse("Welcome to TechwithJoel's Portfolio API. Visit /api/ for endpoints or /admin/ for management.")
+
+def serve_media(request, path):
+    """Serve media files in production"""
+    file_path = os.path.join(settings.MEDIA_ROOT, path)
+    
+    if os.path.exists(file_path):
+        content_type, _ = mimetypes.guess_type(file_path)
+        if content_type is None:
+            content_type = 'application/octet-stream'
+        
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type=content_type)
+            return response
+    else:
+        raise Http404("File not found")
 
 class SiteSettingsViewSet(viewsets.ModelViewSet):
     queryset = SiteSettings.objects.all()
