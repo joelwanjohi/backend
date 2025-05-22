@@ -7,12 +7,17 @@ SECRET_KEY = 'your-secret-key'  # Replace with a secure value in production
 
 DEBUG = False
 
+# Updated ALLOWED_HOSTS to include your Vercel domain
+ALLOWED_HOSTS = [
+    'web-production-7d3c1.up.railway.app',
+    'techwith-joel.vercel.app',
+]
 
-
-ALLOWED_HOSTS = ['web-production-7d3c1.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['https://web-production-7d3c1.up.railway.app']
-
-
+# Updated CSRF_TRUSTED_ORIGINS to include your Vercel domain
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-7d3c1.up.railway.app',
+    'https://techwith-joel.vercel.app',
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -99,15 +104,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# CORS settings for frontend development
+# Updated CORS settings to include your Vercel domain
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'http://localhost:5000',  # Optional: Keep for Live Server
     'http://127.0.0.1:5000',  # Optional
+    'https://techwith-joel.vercel.app',  # Your Vercel domain
 ]
+
+# Optional: Allow all origins during development (remove in production)
+# CORS_ALLOW_ALL_ORIGINS = True
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
